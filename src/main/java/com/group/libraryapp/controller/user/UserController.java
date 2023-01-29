@@ -56,13 +56,25 @@ public class UserController {
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserUpdateRequest request) {
+        String readSql = "SELECT * FROM user WHERE id = ?";
+        // .query는 list로 반환한다!
+        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0, request.getId()).isEmpty();
+        if (isUserNotExist) {
+            throw new IllegalArgumentException();
+        }
         String sql = "UPDATE user SET name = ? WHERE id = ?";
         jdbcTemplate.update(sql, request.getName(), request.getId());
     }
 
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam String name) {
-        // 객체로 만들 수 있지만 쿼리 하나라 그냥 진행
+        String readSql = "SELECT * FROM user WHERE name = ?";
+        // .query는 list로 반환한다!
+        boolean isUserNotExist = jdbcTemplate.query(readSql, (rs, rowNum) -> 0, name).isEmpty();
+        if (isUserNotExist) {
+            throw new IllegalArgumentException();
+        }
+        // 객체로 만들 수 있지만 쿼리 하나라 그냥 행
         String sql = "DELETE FROM user WHERE name = ?";
         jdbcTemplate.update(sql, name);
     }
