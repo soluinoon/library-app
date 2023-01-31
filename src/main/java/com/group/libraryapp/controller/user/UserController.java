@@ -4,6 +4,9 @@ import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.service.UserService;
+import com.group.libraryapp.service.fruit.FruitService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +19,12 @@ public class UserController {
 //    private final List<User> users = new ArrayList<>();
 
     private final UserService userService;
+    private final FruitService fruitService;
 
     // 이렇게 하면 스프링이 알아서 jdbc템플릿 넣어줌
-    public UserController(UserService userService) {
+    public UserController(UserService userService, @Qualifier("appleService") FruitService fruitService) {
         this.userService = userService;
+        this.fruitService = fruitService;
     }
 
     @PostMapping("/user") // POST /user
