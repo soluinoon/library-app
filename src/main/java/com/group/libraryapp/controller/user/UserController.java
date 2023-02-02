@@ -3,11 +3,10 @@ package com.group.libraryapp.controller.user;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
-import com.group.libraryapp.service.UserService;
+import com.group.libraryapp.service.user.UserServiceV1;
 import com.group.libraryapp.service.fruit.FruitService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.group.libraryapp.service.user.UserServiceV2;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +17,12 @@ public class UserController {
     // 메모리에 저장할 때
 //    private final List<User> users = new ArrayList<>();
 
-    private final UserService userService;
-    private final FruitService fruitService;
+    // 스프링 빈을 이용해서 해보기
+    private final UserServiceV2 userService;
 
     // 이렇게 하면 스프링이 알아서 jdbc템플릿 넣어줌
-    public UserController(UserService userService, @Qualifier("appleService") FruitService fruitService) {
+    public UserController(UserServiceV2 userService, @Qualifier("appleService") FruitService fruitService) {
         this.userService = userService;
-        this.fruitService = fruitService;
     }
 
     @PostMapping("/user") // POST /user
