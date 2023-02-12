@@ -1,4 +1,4 @@
-package com.group.libraryapp.repository.book;
+package com.group.libraryapp.repository.bfbook;
 
 public interface BookRepository {
 
