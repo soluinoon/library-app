@@ -1,10 +1,38 @@
 spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: "jdbc:h2:mem:library;MODE=MYSQL;NON_KEYWORDS=USER" # USER 키워드가 예약어라 유저키워드 예약어 아니라고 알려줌
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+---
+spring:
+  # 특정 프로파일에서 실행된다.
+  config:
+    activate:
+      on-profile: dev
+
   datasource:
     # 데이터베이스 주소
     # jdbc : java db connector
     url: "jdbc:mysql://localhost/library"
     username: "root"
-    password: "a1349529"
+    password: "aA1349529!!!!"
     # 데이터 베이스 접근할 때 사용할 도구
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
